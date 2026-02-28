@@ -84,15 +84,15 @@ FROM delhi_accident_data GROUP BY "DISTRICT","dist_area";
 # df_accident_f2['f2']=answer2
 # df_accident_f2.to_sql('df_accident_f2',engine,if_exists='replace')
 # print(df_accident_f2)
-def sigmoid(z):
-    return 1/(1+np.exp(-z))
-points_grid=pd.read_sql_table('points_grid',engine)
-f1=points_grid['f1'].to_numpy()
-f2=points_grid['f2'].to_numpy()
-r=points_grid['ps_dist'].to_numpy()
-safety_score=(sigmoid(1/((f1+f2)*r)))**100
-plt.hist(safety_score,bins=40)
-plt.show()
+# def sigmoid(z):
+#     return 1/(1+np.exp(-z))
+# points_grid=pd.read_sql_table('points_grid',engine)
+# f1=points_grid['f1'].to_numpy()
+# f2=points_grid['f2'].to_numpy()
+# r=points_grid['ps_dist'].to_numpy()
+# safety_score=(sigmoid(1/((f1+f2)*r)))**100
+# plt.hist(safety_score,bins=40)
+# plt.show()
 # points_grid.to_sql('new',engine)
 # df=pd.DataFrame()
 # df['safety_score']=safety_score
