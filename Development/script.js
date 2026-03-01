@@ -1,3 +1,6 @@
+const protocol = new pmtiles.Protocol();
+maplibregl.addProtocol("pmtiles", protocol.add);
+
 const map = new maplibregl.Map({
     container: 'map',
     center: [77.2093, 28.6139],
@@ -12,14 +15,14 @@ const map = new maplibregl.Map({
 })
 
 Map.on('load', () => {
-    map.addSource('safety-data', { type: 'vector', url: 'pmtiles://safety-score.pmtiles' })
+    map.addSource('safety-data', { type: 'vector', url: 'pmtiles://path/to/safety-score.pmtiles' })
 })
 
 Map.addlayer({
     id: 'safety-heatmap-layer',
     type: 'heatmap',
     source: 'safety-data',
-    'source-layer': 'pts_grid_full_data',
+    'source-layer': 'safety-score',
     paint: {
         'heatmap-weight': [
             'interpolate', ['linear']
@@ -41,8 +44,7 @@ Map.addlayer({
         'heatmap-radius': [
             'interpolate', ['linear'],
             ['zoom'], 0, 2, 15, 20
-        ],
-        'heatmap-opacity': 0.8
+        ]
 
 
     }
