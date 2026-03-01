@@ -44,8 +44,8 @@ Map.addlayer({
         'heatmap-radius': [
             'interpolate', ['linear'],
             ['zoom'], 0, 2, 15, 20
-        ]
-
+        ],
+        'heatmap-opacity': 0.8
 
     }
 
