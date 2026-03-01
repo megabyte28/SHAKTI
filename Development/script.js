@@ -1,5 +1,4 @@
-//const protocol = new pmtiles.Protocol();
-//maplibregl.addProtocol("pmtiles", protocol.tile);
+
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", (request) => {
     return new Promise((resolve, reject) => {
@@ -21,9 +20,6 @@ const map = new maplibregl.Map({
     maxZoom: 20,
     antialias: true,
     style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-    //0--whole map
-    //11-- city levels
-    //18-- point levels
 })
 
 map.on('load', () => {
@@ -39,7 +35,7 @@ map.on('load', () => {
             // range is 0–350 as you said, but raw values are small so we scale
             'heatmap-weight':
 
-                ['interpolate', ['linear'], ['get', 'safety_score'], 0, 0, 10, 1]
+                ['interpolate', ['linear'], ['get', 'safety_score'], 0, 0, 350, 1]
             // multiply by a constant to boost density
             ,
 
