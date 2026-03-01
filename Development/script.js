@@ -15,9 +15,9 @@ const map = new maplibregl.Map({
 })
 
 Map.on('load', () => {
-    map.addSource('safety-data', { type: 'vector', url: 'pmtiles://path/to/safety-score.pmtiles' })
+    map.addSource('safety-data', { type: 'vector', url: 'pmtiles://safety-score.pmtiles' })
 })
-
+//'pmtiles://path/to/safety-score.pmtiles'
 Map.addlayer({
     id: 'safety-heatmap-layer',
     type: 'heatmap',
