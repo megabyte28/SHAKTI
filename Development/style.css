@@ -67,6 +67,13 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 40px;
+    /* let events pass through so the map can be interacted with */
+    pointer-events: none;
+}
+
+/* children that need to receive clicks must re-enable events */
+#ui > * {
+    pointer-events: auto;
 }
 
 :root {
