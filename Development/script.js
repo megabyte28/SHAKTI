@@ -32,36 +32,62 @@ map.on('load', () => {
         source: 'safety-data',
         'source-layer': 'pts_grid_full_data',
         paint: {
-            // range is 0–350 as you said, but raw values are small so we scale
+
             'heatmap-weight':
 
                 ['interpolate', ['linear'], ['get', 'safety_score'], 0, 0, 350, 1]
-            // multiply by a constant to boost density
             ,
-
             'heatmap-intensity': [
                 'interpolate', ['linear'],
-                ['zoom'], 0, 1, 15, 3],
+                ['zoom'], 0, 0.2, 15, 0.8],
 
             'heatmap-color': [
                 'interpolate', ['linear'], ['heatmap-density'],
                 0, 'rgba(0,0,0,0)',
-                // densities in these tiles are extremely small, so start coloring early
-                0.2, 'rgb(255,0,0)',
-                0.4, 'rgb(255,165,0)',
-                0.6, 'rgb(255,255,0)',
-                1, 'rgb(0,255,0)'],
+                0.1, 'rgb(255,0,0)',
+                0.5, 'rgb(255,255,0)',
+                0.9, 'rgb(0,255,0)'],
+
 
             'heatmap-radius': [
                 'interpolate', ['linear'],
-                ['zoom'], 0, 2, 15, 20
-            ],
-            'heatmap-opacity': 0.8
+                ['zoom'], 0, 5, 15, 15],
+            'heatmap-opacity': 0.7
 
         }
 
     })
+    map.addLayer({
+        'id': 'safety-circles',
+        'type': 'circle',
+        'source': 'safety-data',
+        'source-layer': 'pts_grid_full_data',
+        'minzoom': 13,
+        'paint': {
 
+            'circle-radius': [
+                'interpolate', ['linear'], ['zoom'],
+                13, 2,
+                18, 10
+            ],
+
+            'circle-color': [
+                'interpolate', ['linear'],
+                ['coalesce', ['get', 'safety_score'], 0],
+                0, '#ff0000',
+                175, '#ffff00',
+                350, '#00ff00'
+            ],
+            'circle-stroke-width': 1,
+            'circle-stroke-color': 'white',
+
+            'circle-opacity': [
+                'interpolate', ['linear'], ['zoom'],
+                13, 0,
+                14, 1
+            ]
+        }
+    });
 
     map.addControl(new maplibregl.NavigationControl());
 
