@@ -2,7 +2,15 @@
 //maplibregl.addProtocol("pmtiles", protocol.tile);
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", (request) => {
-    return protocol.tile(request);
+    return new Promise((resolve, reject) => {
+        protocol.tile(request, (err, data, cache, expires) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ data: data, cache: cache, expires: expires });
+            }
+        });
+    });
 });
 
 const map = new maplibregl.Map({
@@ -62,6 +70,6 @@ map.on('load', () => {
     map.addControl(new maplibregl.NavigationControl());
 
     map.on('error', (e) => {
-        console.error("happy",e);
+        console.error("happy", e);
     });
 })
