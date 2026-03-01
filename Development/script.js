@@ -39,7 +39,7 @@ map.on('load', () => {
             // range is 0–350 as you said, but raw values are small so we scale
             'heatmap-weight':
 
-                ['interpolate', ['linear'], ['get', 'safety_score'], 0, 0, 10, 1]
+                ['interpolate', ['linear'], ['get', 'safety_score'], 0, 0, 350, 1]
             // multiply by a constant to boost density
             ,
 
