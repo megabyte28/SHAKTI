@@ -1,5 +1,9 @@
+//const protocol = new pmtiles.Protocol();
+//maplibregl.addProtocol("pmtiles", protocol.tile);
 const protocol = new pmtiles.Protocol();
-maplibregl.addProtocol("pmtiles", protocol.tile);
+maplibregl.addProtocol("pmtiles", (request) => {
+    return protocol.tile(request);
+});
 
 const map = new maplibregl.Map({
     container: 'map',
@@ -57,5 +61,7 @@ map.on('load', () => {
 
     map.addControl(new maplibregl.NavigationControl());
 
-    map.on('error', (e) => console.error(e));
+    map.on('error', (e) => {
+        console.error("happy",e);
+    });
 })
