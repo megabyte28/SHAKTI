@@ -51,10 +51,10 @@ map.on('load', () => {
                 'interpolate', ['linear'], ['heatmap-density'],
                 0, 'rgba(0,0,0,0)',
                 // densities in these tiles are extremely small, so start coloring early
-                0.005, 'rgb(255,0,0)',
-                0.01, 'rgb(255,165,0)',
-                0.02, 'rgb(255,255,0)',
-                0.05, 'rgb(0,255,0)'],
+                0.2, 'rgb(255,0,0)',
+                0.4, 'rgb(255,165,0)',
+                0.6, 'rgb(255,255,0)',
+                1, 'rgb(0,255,0)'],
 
             'heatmap-radius': [
                 'interpolate', ['linear'],
