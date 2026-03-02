@@ -112,10 +112,11 @@ function displaySuggestions(places) {
 
 
                 const coords = place.geometry.coordinates;
-                map.flyTo({ center: coords, zoom: 15 });
-            }
+
+            };
+            activeInput = null;
         });
-        activeInput = null;
+
         list.appendChild(li);
     });
 
