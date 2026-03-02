@@ -67,11 +67,11 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 40px;
-    /* let events pass through so the map can be interacted with */
+    
     pointer-events: none;
 }
 
-/* children that need to receive clicks must re-enable events */
+
 #ui > * {
     pointer-events: auto;
 }
@@ -148,9 +148,11 @@
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(15px);
     z-index: 100;
-    display: none;
+    display: block;
     padding: 20px;
     overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
 }
 
 #suggestions {
