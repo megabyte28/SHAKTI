@@ -58,6 +58,7 @@ map.on('load', () => {
     });
     map.addControl(new maplibregl.NavigationControl());
 
+
     map.on('error', (e) => {
         console.error("happy", e);
     });
@@ -66,18 +67,47 @@ const fromInput = document.getElementById('from-input');
 const toInput = document.getElementById('to-input');
 const suggestionBox = document.getElementById('suggestion-box');
 const suggestionItems = document.querySelectorAll('#suggestions li');
-const showBox = () => {
-    suggestionBox.classList.add('active');
-};
-fromInput.addEventListener('focus', showBox);
-toInput.addEventListener('focus', showBox);
-suggestionItems.forEach(item => {
-    item.addEventListener('click', () => {
-        toInput.value = item.innerText;
-        suggestionBox.classList.remove('active');
-    });
+let acitive = null;
+let activeInput = null;
+
+fromInput.addEventListener('input', (e) => {
+    acitiveInput = e.target;
+    getSuggestions(e.target.value);
 });
 
+toInput.addEventListener('input', (e) => {
+    acitiveInput = e.target;
+    getSuggestions(e.target.value);
+});
+
+async function getSuggestions(text) {
+    if (text.length < 1) return;
+
+    const url = `https://photon.komoot.io/api/?q=${text}&lat=28.6139&lon=77.2093&limit=5`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    displaySuggestions(data.features);
+}
+function displaySuggestions(places) {
+    const list = document.getElementById('suggestions');
+    list.innerHTML = '';
+
+    places.forEach(place => {
+        const li = document.createElement('li');
+        li.innerText = place.properties.name + (place.properties.city ? `, ${place.properties.city}` : '');
+
+        li.onclick = () => {
+            activeInput.value = li.innerText;
+            document.getElementById('suggestion-box').classList.remove('active');
+        };
+
+        list.appendChild(li);
+    });
+
+    document.getElementById('suggestion-box').classList.add('active');
+}
 document.addEventListener('mousedown', (e) => {
     if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
         suggestionBox.classList.remove('active');
