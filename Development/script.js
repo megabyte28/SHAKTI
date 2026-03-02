@@ -1,4 +1,3 @@
-
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", (request) => {
     return new Promise((resolve, reject) => {
@@ -56,42 +55,31 @@ map.on('load', () => {
 
         }
 
-    })
-    map.addLayer({
-        'id': 'safety-circles',
-        'type': 'circle',
-        'source': 'safety-data',
-        'source-layer': 'pts_grid_full_data',
-        'minzoom': 13,
-        'paint': {
-
-            'circle-radius': [
-                'interpolate', ['linear'], ['zoom'],
-                13, 2,
-                18, 10
-            ],
-
-            'circle-color': [
-                'interpolate', ['linear'],
-                ['coalesce', ['get', 'safety_score'], 0],
-                0, '#ff0000',
-                175, '#ffff00',
-                350, '#00ff00'
-            ],
-            'circle-stroke-width': 1,
-            'circle-stroke-color': 'white',
-
-            'circle-opacity': [
-                'interpolate', ['linear'], ['zoom'],
-                13, 0,
-                14, 1
-            ]
-        }
     });
-
     map.addControl(new maplibregl.NavigationControl());
 
     map.on('error', (e) => {
         console.error("happy", e);
     });
 })
+const fromInput = document.getElementById('from-input');
+const toInput = document.getElementById('to-input');
+const suggestionBox = document.getElementById('suggestion-box');
+const suggestionItems = document.querySelectorAll('#suggestions li');
+const showBox = () => {
+    suggestionBox.classList.add('active');
+};
+fromInput.addEventListener('focus', showBox);
+toInput.addEventListener('focus', showBox);
+suggestionItems.forEach(item => {
+    item.addEventListener('click', () => {
+        toInput.value = item.innerText;
+        suggestionBox.classList.remove('active');
+    });
+});
+
+document.addEventListener('mousedown', (e) => {
+    if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
+        suggestionBox.classList.remove('active');
+    }
+});

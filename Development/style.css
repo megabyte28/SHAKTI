@@ -67,12 +67,12 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 40px;
-    
+
     pointer-events: none;
 }
 
 
-#ui > * {
+#ui>* {
     pointer-events: auto;
 }
 
@@ -90,7 +90,6 @@
     padding: 10px;
     margin-top: 20px;
     pointer-events: auto;
-
 }
 
 .search-box input {
@@ -145,7 +144,7 @@
     top: 160px;
     width: 100%;
     height: calc(100% - 160px);
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(183, 110, 121, 0.05);
     backdrop-filter: blur(15px);
     z-index: 100;
     display: block;
@@ -153,6 +152,12 @@
     overflow-y: auto;
     opacity: 0;
     pointer-events: none;
+}
+
+#suggestion-box.active {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
 }
 
 #suggestions {
