@@ -29,7 +29,7 @@ map.on('load', () => {
         id: 'safety-heatmap-layer',
         type: 'heatmap',
         source: 'safety-data',
-        'source-layer': 'pts_grid_full_data',
+        'source-layer': 'pts_grid_full_data_new',
         paint: {
 
             'heatmap-weight':
@@ -42,10 +42,10 @@ map.on('load', () => {
 
             'heatmap-color': [
                 'interpolate', ['linear'], ['heatmap-density'],
-                0, 'rgba(0,0,0,0)',
-                0.1, 'rgb(255,0,0)',
-                0.5, 'rgb(255,255,0)',
-                0.9, 'rgb(0,255,0)'],
+                0.2, 'rgb(255,0,0)',
+                0.4, 'rgb(255,165,0)',
+                0.6, 'rgb(255,255,0)',
+                1.0, 'rgb(0,255,0)',],
 
 
             'heatmap-radius': [
