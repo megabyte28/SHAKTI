@@ -42,12 +42,12 @@ map.on('load', () => {
 
             'heatmap-color': [
                 'interpolate', ['linear'], ['heatmap-density'],
-                0, 'rgba(255, 0, 255, 0)',   // Transparent Magenta (Low)
-                0.1, 'rgb(255, 0, 255)',      // Magenta
-                0.3, 'rgb(0, 0, 255)',        // Blue
-                0.5, 'rgb(0, 255, 255)',      // Cyan
-                0.7, 'rgb(0, 255, 0)',        // Green
-                0.9, 'rgb(255, 255, 0)',      // Yellow
+                0, 'rgba(255, 0, 255, 0)',
+                0.1, 'rgb(255, 0, 255)',
+                0.3, 'rgb(0, 0, 255)',
+                0.5, 'rgb(0, 255, 255)',
+                0.7, 'rgb(0, 255, 0)',
+                0.9, 'rgb(255, 255, 0)',
                 1, 'rgb(255, 0, 0)'],
 
 
