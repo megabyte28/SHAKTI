@@ -71,12 +71,12 @@ let acitive = null;
 let activeInput = null;
 
 fromInput.addEventListener('input', (e) => {
-    acitiveInput = e.target;
+    activeInput = e.target;
     getSuggestions(e.target.value);
 });
 
 toInput.addEventListener('input', (e) => {
-    acitiveInput = e.target;
+    activeInput = e.target;
     getSuggestions(e.target.value);
 });
 
@@ -96,18 +96,31 @@ function displaySuggestions(places) {
 
     places.forEach(place => {
         const li = document.createElement('li');
-        li.innerText = place.properties.name + (place.properties.city ? `, ${place.properties.city}` : '');
 
-        li.onclick = () => {
-            activeInput.value = li.innerText;
-            document.getElementById('suggestion-box').classList.remove('active');
-        };
 
+        const placeName = place.properties.name + (place.properties.city ? `, ${place.properties.city}` : '');
+        li.innerText = placeName;
+
+
+        li.addEventListener('click', () => {
+            if (activeInput) {
+                activeInput.value = placeName;
+                suggestionBox.classList.remove('active');
+
+
+                const coords = place.geometry.coordinates;
+                map.flyTo({ center: coords, zoom: 15 });
+            }
+        });
+        activeInput = null;
         list.appendChild(li);
     });
 
-    document.getElementById('suggestion-box').classList.add('active');
+    suggestionBox.classList.add('active');
 }
+
+document.getElementById('suggestion-box').classList.add('active');
+
 document.addEventListener('mousedown', (e) => {
     if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
         suggestionBox.classList.remove('active');
