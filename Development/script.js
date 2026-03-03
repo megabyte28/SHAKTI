@@ -145,18 +145,18 @@ function displaySuggestions(places) {
 }
 async function getRoutes() {
     const url = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
-    const apikey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjJiZTE3NjMzYWJiNDQ0Y2M5Y2EzYTg1N2QwNzBkYzc5IiwiaCI6Im11cm11cjY0In0="
+    const Apikey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjJiZTE3NjMzYWJiNDQ0Y2M5Y2EzYTg1N2QwNzBkYzc5IiwiaCI6Im11cm11cjY0In0="
 
     const body = {
         coordinates: [startCoords, endCoords],
         alternative_routes: { target_count: 3 },
-        units: '3'
+        units: 'm'
     };
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': apikey,
+            'Authorization': Apikey,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -194,7 +194,7 @@ function drawRoute(routeGeojson) {
     if (map.getSource('route-source')) {
         map.removeSource('route-source');
     }
-
+    map.addSource('route-source', { type: 'geojson', data: routeGeojson });
     map.addLayer({
         id: 'route-line',
         type: 'line',
@@ -207,7 +207,7 @@ function drawRoute(routeGeojson) {
     })
 };
 async function startNavigation() {
-    getRoutes();
+    const routes = await getRoutes();
     let safestRoute = routes[0];
     let highestSafety = -1;
     routes.forEach((route) => {
