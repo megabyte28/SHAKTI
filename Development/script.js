@@ -99,7 +99,7 @@ function startLiveTracking() {
             else navMarker.setLngLat(currentPos);
             if (heading !== null) navMarker.setRotation(heading);
             map.easeTo({
-                center: currentPos,
+                center: startCoords,
                 pitch: 60,
                 zoom: 18,
                 bearing: heading || 0,
