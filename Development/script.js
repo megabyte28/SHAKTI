@@ -103,6 +103,7 @@ function startLiveTracking() {
             map.easeTo({
                 center: currentPos,
                 pitch: 60,
+                zoom: 18,
                 bearing: heading || 0,
                 duration: 1000
             });
@@ -169,7 +170,7 @@ function displaySuggestions(places) {
             });
         }
     });
-    list.appendChild(locationLi); // Sabse upar add karo
+    list.appendChild(locationLi);
 
     places.forEach(place => {
         const li = document.createElement('li');
