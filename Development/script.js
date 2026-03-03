@@ -278,6 +278,7 @@ async function startNavigation() {
         drawRoute(safestRoute);
         startLiveTracking();
     })
+    startLiveTracking();
 };
 document.addEventListener('mousedown', (e) => {
     if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
