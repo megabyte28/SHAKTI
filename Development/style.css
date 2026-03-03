@@ -130,7 +130,28 @@
     opacity: 0;
     pointer-events: none;
     z-index: 20;
-    transition: all 0.4s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0, 2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+#nav-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--rose-gold);
+}
+
+#nav-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--rose-gold);
+}
+
+#nav-btn:hover svg {
+    transform: translateX(2px);
+    color: black;
 }
 
 #nav-btn.active {
