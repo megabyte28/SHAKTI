@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project212</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&family=Inter:wght@300;400&display=swap">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css">
+
+</head>
+
+<body>
+    <div id="app-container">
+        <div id="map"></div>
+        <div id="ui">
+            <div class="header-container">
+                <div class="logo-icon">G</div>
+                <div class="title-text">
+                    <h1>Project212: <span>Safe Route Finder</span></h1>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="From:" id="from-input">
+                    <input type="text" placeholder="To:" id="to-input">
+                </div>
+                <div id="suggestion-box">
+                    <ul id="suggestions">
+                    </ul>
+                </div>
+                <button id="nav-btn"></button>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
