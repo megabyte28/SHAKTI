@@ -70,19 +70,40 @@ const fromInput = document.getElementById('from-input');
 const toInput = document.getElementById('to-input');
 const suggestionBox = document.getElementById('suggestion-box');
 const suggestionItems = document.querySelectorAll('#suggestions li');
+const navBtn = document.getElementById('nav-btn');
 let acitive = null;
 let activeInput = null;
-
+function checkInput() {
+    const fromValue = fromInput.value.trim();
+    const toValue = toInput.value.trim();
+    if (fromValue !== "" && toValue !== "") {
+        navBtn.classList.add('active');
+    }
+    else {
+        navBtn.classList.remove('active');
+    }
+}
 fromInput.addEventListener('input', (e) => {
     activeInput = e.target;
     getSuggestions(e.target.value);
+    checkInput();
 });
 
 toInput.addEventListener('input', (e) => {
     activeInput = e.target;
     getSuggestions(e.target.value);
+    checkInput();
 });
-
+function checkInput() {
+    const fromValue = fromInput.value.trim();
+    const toValue = toInput.value.trim();
+    if (fromInput !== "" && toInput !== "") {
+        navBtn.classList.add('active');
+    }
+    else {
+        navBtn.classList.remove('active');
+    }
+}
 async function getSuggestions(text) {
     if (text.length < 1) return;
 
@@ -110,20 +131,27 @@ function displaySuggestions(places) {
                 activeInput.value = placeName;
                 suggestionBox.classList.remove('active');
 
-
                 const coords = place.geometry.coordinates;
-
             };
+            checkInput();
             activeInput = null;
+
         });
 
         list.appendChild(li);
     });
 
     suggestionBox.classList.add('active');
+
 }
 document.addEventListener('mousedown', (e) => {
     if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
         suggestionBox.classList.remove('active');
     }
 });
+navBtn.addEventListener('click', () => {
+    if (map.getLayer('safety-heatmap-layer')) {
+        map.setLayoutProperty('safety-heatmap-layer', 'visibility', 'none');
+        suggestionBox.classList.remove('active');
+    }
+})
