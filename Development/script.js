@@ -75,7 +75,40 @@ let acitive = null;
 let activeInput = null;
 let startCoords = null;
 let endCoords = null;
+let navMarker = null;
+function createNavMarker(coords) {
+    const el = document.createElement('div');
+    el.className = 'navigation-arrow';
+    el.innerHTML = `
+        <svg width="40" height="40" viewBox="0 0 100 100">
+            <path d="M50 10 L90 90 L50 75 L10 90 Z" fill="white" stroke="black" stroke-width="5" stroke-linejoin="round"/>
+        </svg>`;
 
+    navMarker = new maplibregl.Marker({
+        element: el,
+        rotationAlignment: 'map',
+        pitchAlignment: 'map'
+    })
+        .setLngLat(coords)
+        .addTo(map);
+};
+function startLiveTracking() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.watchPosition((position) => {
+            const { longitude, latitude, heading } = position.coords;
+            const currentPos = [longitude, latitude];
+            if (!navMarker) createNavMarker(currentPos);
+            else navMarker.setLngLat(currentPos);
+            if (heading !== null) navMarker.setRotation(heading);
+            map.easeTo({
+                center: currentPos,
+                pitch: 60,
+                bearing: heading || 0,
+                duration: 1000
+            });
+        }, (err) => console.error(err), { enableHighAccuracy: true });
+    }
+};
 function checkInput() {
     const fromValue = fromInput.value.trim();
     const toValue = toInput.value.trim();
@@ -100,12 +133,9 @@ toInput.addEventListener('input', (e) => {
 
 async function getSuggestions(text) {
     if (text.length < 1) return;
-
     const url = `https://photon.komoot.io/api/?q=${text}&lat=28.6139&lon=77.2093&limit=5`;
-
     const response = await fetch(url);
     const data = await response.json();
-
     displaySuggestions(data.features);
 }
 function displaySuggestions(places) {
@@ -124,7 +154,6 @@ function displaySuggestions(places) {
             if (activeInput) {
                 activeInput.value = placeName;
                 suggestionBox.classList.remove('active');
-
                 const coords = place.geometry.coordinates;
                 if (activeInput.id === 'from-input') {
                     startCoords = coords;
@@ -217,6 +246,7 @@ async function startNavigation() {
             safestRoute = route;
         }
         drawRoute(safestRoute);
+        startLiveTracking();
     })
 };
 document.addEventListener('mousedown', (e) => {
