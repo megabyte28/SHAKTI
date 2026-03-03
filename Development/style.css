@@ -224,11 +224,10 @@
 }
 
 @media (max-width: 600px) {
-
     #ui {
         padding: 15px;
         padding-top: env(safe-area-inset-top, 20px);
-        /* Notched phones ke liye spacing */
+        
         justify-content: flex-start;
     }
 
@@ -238,19 +237,14 @@
         justify-content: flex-start;
         padding-left: 10px;
     }
-
     .title-text h1 {
         font-size: 20px;
     }
-
-
     .search-box {
         width: 100%;
         margin-top: 5px;
         border-radius: 12px;
     }
-
-
     #suggestion-box {
         position: absolute;
         top: 140px;
@@ -260,26 +254,19 @@
         z-index: 1000;
         background: rgba(15, 15, 15, 0.95);
     }
-
-    /* 5. Navigation Button - Moving up from the bottom edge */
     #nav-btn {
         bottom: 40px;
-        /* Phle 30px tha, ab thoda upar kiya */
         right: 20px;
         width: 55px;
         height: 55px;
         box-shadow: 0 4px 20px rgba(183, 110, 121, 0.6);
     }
-
-    /* 6. Fix Zoom Controls Overlap */
-    /* MapLibre ke controls ko move karne ke liye */
     .maplibregl-ctrl-top-right {
         top: 150px !important;
-        /* Suggestion box ke niche shift kiya */
     }
 
     .maplibregl-ctrl-bottom-right {
         bottom: 110px !important;
-        /* Nav button ke upar shift kiya */
+        
     }
 }
