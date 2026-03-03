@@ -60,8 +60,6 @@ map.on('load', () => {
 
     });
     map.addControl(new maplibregl.NavigationControl());
-
-
     map.on('error', (e) => {
         console.error("happy", e);
     });
