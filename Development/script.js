@@ -142,8 +142,83 @@ function displaySuggestions(places) {
     });
 
     suggestionBox.classList.add('active');
-
 }
+async function getRoutes() {
+    const url = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
+    const apikey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjJiZTE3NjMzYWJiNDQ0Y2M5Y2EzYTg1N2QwNzBkYzc5IiwiaCI6Im11cm11cjY0In0="
+
+    const body = {
+        coordinates: [startCoords, endCoords],
+        alternative_routes: { target_count: 3 },
+        units: '3'
+    };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': apikey,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+    return data.features;
+}
+function CalculateRouteSafety(route) {
+    const coords = route.geometry.coordinates;
+    let totalScore = 0;
+    let pointsCount = 0;
+    const zoom = map.getZoom();
+    for (let i = 0; i < coords.length; i += 10) {
+        const point = coords[i];
+        const lat = point[1];
+        const pixel = map.project(point);
+        const metersperpixel = (Math.cos(lat * Math.PI / 180) * 2 * Math.PI * 6378137) / (256 * Math.pow(2, zoom));
+        const radiusinpixel = 72.5 / metersperpixel;
+        const bbox = [[pixel.x - radiusinpixel, pixel.y - radiusinpixel], [pixel.x + radiusinpixel, pixel.y + radiusinpixel]]
+        const features = map.queryRenderedFeatures(bbox, { layers: ['safety-heatmap-layer'] });
+        const sum = features.reduce((s, f) => s + (f.properties.safety_score || 0), 0);
+        const avg = sum / features.length;
+        totalScore += avg;
+        pointsCount++;
+    }
+    return totalScore / pointsCount;
+}
+
+function drawRoute(routeGeojson) {
+    if (map.getLayer('route-line')) {
+        map.removeLayer('route-line');
+    }
+
+    if (map.getSource('route-source')) {
+        map.removeSource('route-source');
+    }
+
+    map.addLayer({
+        id: 'route-line',
+        type: 'line',
+        source: 'route-source',
+        paint: {
+            'line-color': '#bc13fe',
+            'line-width': 5,
+            'line-opacity': 0.8
+        }
+    })
+};
+async function startNavigation() {
+    getRoutes();
+    let safestRoute = routes[0];
+    let highestSafety = -1;
+    routes.forEach((route) => {
+        const score = CalculateRouteSafety(route);
+        if (score > highestSafety) {
+            highestSafety = score;
+            safestRoute = route;
+        }
+        drawRoute(safestRoute);
+    })
+};
 document.addEventListener('mousedown', (e) => {
     if (!suggestionBox.contains(e.target) && e.target !== fromInput && e.target !== toInput) {
         suggestionBox.classList.remove('active');
@@ -154,5 +229,6 @@ navBtn.addEventListener('click', () => {
         map.setLayoutProperty('safety-heatmap-layer', 'visibility', 'none');
         suggestionBox.classList.remove('active');
         navBtn.classList.remove('active');
+        startNavigation();
     }
 })
