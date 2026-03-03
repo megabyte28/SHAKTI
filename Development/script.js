@@ -73,6 +73,9 @@ const suggestionItems = document.querySelectorAll('#suggestions li');
 const navBtn = document.getElementById('nav-btn');
 let acitive = null;
 let activeInput = null;
+let startCoords = null;
+let endCoords = null;
+
 function checkInput() {
     const fromValue = fromInput.value.trim();
     const toValue = toInput.value.trim();
@@ -132,6 +135,12 @@ function displaySuggestions(places) {
                 suggestionBox.classList.remove('active');
 
                 const coords = place.geometry.coordinates;
+                if (activeInput.id === 'from-input') {
+                    startCoords = coords;
+                }
+                else {
+                    endCoords = coords;
+                }
             };
             checkInput();
             activeInput = null;
@@ -153,5 +162,6 @@ navBtn.addEventListener('click', () => {
     if (map.getLayer('safety-heatmap-layer')) {
         map.setLayoutProperty('safety-heatmap-layer', 'visibility', 'none');
         suggestionBox.classList.remove('active');
+        navBtn.classList.remove('active');
     }
 })
