@@ -97,16 +97,7 @@ toInput.addEventListener('input', (e) => {
     getSuggestions(e.target.value);
     checkInput();
 });
-function checkInput() {
-    const fromValue = fromInput.value.trim();
-    const toValue = toInput.value.trim();
-    if (fromInput !== "" && toInput !== "") {
-        navBtn.classList.add('active');
-    }
-    else {
-        navBtn.classList.remove('active');
-    }
-}
+
 async function getSuggestions(text) {
     if (text.length < 1) return;
 
