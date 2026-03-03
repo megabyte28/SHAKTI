@@ -203,3 +203,14 @@
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease-out;
 }
+
+.current-location-item {
+    color: #4285F4;
+    border-bottom: 2px solid #eee;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.current-location-item:hover {
+    background-color: #f0f7ff;
+}

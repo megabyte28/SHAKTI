@@ -142,6 +142,35 @@ function displaySuggestions(places) {
     const list = document.getElementById('suggestions');
     list.innerHTML = '';
 
+    const locationLi = document.createElement('li');
+    locationLi.innerHTML = "<strong>Use Current Location</strong>";
+    locationLi.classList.add('current-location-item');
+
+    locationLi.addEventListener('click', () => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const coords = [position.coords.longitude, position.coords.latitude];
+
+                if (activeInput) {
+                    activeInput.value = "Your Location";
+                    suggestionBox.classList.remove('active');
+
+
+                    if (activeInput.id === 'from-input') {
+                        startCoords = coords;
+                    } else {
+                        endCoords = coords;
+                    }
+                    checkInput();
+                }
+            }, (err) => {
+                alert("Location access denied or unavailable.");
+                console.error(err);
+            });
+        }
+    });
+    list.appendChild(locationLi); // Sabse upar add karo
+
     places.forEach(place => {
         const li = document.createElement('li');
 
