@@ -21,16 +21,24 @@
 }
 
 .logo-icon {
-    width: 35px;
-    height: 35px;
-    border: 2px solid var(--rose-gold);
-    border-radius: 8px;
+    width: 80px;
+    height: 80px;
+    border: 1.5px solid var(--rose-gold);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--rose-gold);
     font-weight: bold;
     box-shadow: 0 0 10px var(--rose-gold);
+    overflow: hidden;
+    background: rgba(0, 0, 0, 3);
+}
+
+.brand-logo {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
 }
 
 .title-text h1 {
@@ -230,8 +238,8 @@
     }
 
     .logo-icon {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
     }
 
 
