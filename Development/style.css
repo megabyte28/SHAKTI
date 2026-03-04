@@ -229,9 +229,24 @@
         margin-top: 5px;
     }
 
-    #suggestion-box {
-        max-height: 35vh;
-    }
+#suggestion-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(183, 110, 121, 0.05).;
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    display: block;
+    padding: 10px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 15px;
+    margin-top: 5px;
+    border: 1px solid var(--rose-gold);
+    max-height: 35vh;
+}
 
     #nav-btn {
         bottom: calc(30px + env(safe-area-inset-bottom, 20px));
