@@ -98,17 +98,18 @@ function startLiveTracking() {
             if (!navMarker) createNavMarker(currentPos);
             else navMarker.setLngLat(currentPos);
             if (heading !== null) navMarker.setRotation(heading);
-            map.easeTo({
-                center: startCoords,
+            const easeOptions = {
+                center: currentPos,
                 pitch: 60,
-                zoom: 18,
                 bearing: heading || 0,
                 duration: 1000
-            });
+            };
+
             if (!isInitialZoomDone) {
                 easeOptions.zoom = 18;
                 isInitialZoomDone = true; 
             }
+            map.easeTo(easeOptions);
         }, (err) => console.error(err), { enableHighAccuracy: true });
     }
 };
