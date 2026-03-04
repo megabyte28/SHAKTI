@@ -246,6 +246,7 @@
     margin-top: 5px;
     border: 1px solid var(--rose-gold);
     max-height: 35vh;
+    height:50%;
 }
 
     #nav-btn {
