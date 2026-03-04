@@ -268,6 +268,7 @@ function drawRoute(routeGeojson) {
     })
 };
 async function startNavigation() {
+    isInitialZoomDone = false;
     const routes = await getRoutes();
     let safestRoute = routes[0];
     let highestSafety = -1;
