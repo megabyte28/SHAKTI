@@ -53,8 +53,8 @@
 }
 
 .logo-icon {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border: none;
     border-radius: 50%;
     display: flex;
@@ -218,8 +218,8 @@
     }
 
     .logo-icon {
-        width: 100px;
-        height: 100px;
+        width: 140px;
+        height: 140px;
     }
 
     .title-text h1 {
