@@ -105,6 +105,10 @@ function startLiveTracking() {
                 bearing: heading || 0,
                 duration: 1000
             });
+            if (!isInitialZoomDone) {
+                easeOptions.zoom = 18;
+                isInitialZoomDone = true; 
+            }
         }, (err) => console.error(err), { enableHighAccuracy: true });
     }
 };
